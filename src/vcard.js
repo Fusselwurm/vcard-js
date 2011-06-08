@@ -10,20 +10,30 @@ var outputFuncs = {
 	escapeVal: function (v) {
 		// todo
 	},
+	paramToString: function (param) {
+		var
+			res = [],
+			paramName,
+			paramVal;
+
+		for (paramName in param) {
+			if (param.hasOwnProperty(paramName))  {
+				paramVal = param[paramName];
+				if (!Array.isArray(paramVal)) {
+					paramVal = [paramVal];
+				}
+				res.push(paramName.toUpperCase() + '=' + paramVal.join(','));
+			}
+		}
+		return res.length ? ';' + res.join(';') : '';
+	},
 	contentLine: function (group, name, param, value) {
 		var line = '';
 		if (group) {
 			line += group + '.'
 		}
 		line += name.toUpperCase();
-
-		if (!Array.isArray(param)) {
-			param = [param];
-		}
-
-		if (param) {
-			line += ';' + param.join(';');
-		}
+		line += outputFuncs.paramToString(param);
 
 		if (!Array.isArray(value)) {
 			value = [value];
@@ -36,7 +46,7 @@ var outputFuncs = {
 		return 'BEGIN:VCARD\r\nVERSION:' + (version || '4.0');
 	},
 	foot: function () {
-		return 'END:VCARD';
+		return 'END:VCARD\r\n';
 	}
 };
 
