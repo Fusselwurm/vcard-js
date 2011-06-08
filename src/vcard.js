@@ -54,7 +54,19 @@ var outputFuncs = {
 
 /**
  *
- * @param data hash (object) with properties: group, name, param, value,
+ * @param data hash (object) with properties: group, name, param, value
+ *
+ * e.g. this JSON example:
+ * @code
+ * {
+ *     name: 'email',
+ *     param: {
+ *         type: ['work', 'home']
+ *     },
+ *     value: 'fusselwurm@gmail.com'
+ * }
+ * @endcode
+ *
  */
 exports.createFromData = function (data) {
 	return {
